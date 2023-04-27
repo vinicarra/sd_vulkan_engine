@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\FRWK\source\repos\vulkan-render-pipeline\build\CMakeFiles\565aa7cbd11bde27ee22f25b82a47f44\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{090287BC-CD2C-3283-8895-FD15D94CE795}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

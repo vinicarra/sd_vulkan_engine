@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\FRWK\source\repos\vulkan-render-pipeline\build\CMakeFiles\eebf01d594eb1073beda53940323988b\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="C:\Users\FRWK\source\repos\vulkan-render-pipeline\dependencies\glfw\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\Users\FRWK\source\repos\vulkan-render-pipeline\build\dependencies\glfw\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{090287BC-CD2C-3283-8895-FD15D94CE795}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
