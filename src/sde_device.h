@@ -31,7 +31,7 @@ namespace sde {
 	#ifdef NDEBUG
 		const bool enableValidationLayers = false;
 	#else
-		const bool enableValidationLayers = false;
+		const bool enableValidationLayers = true;
 	#endif
 
 		SdeDevice(SdeWindow& window);
@@ -42,6 +42,15 @@ namespace sde {
 		SdeDevice& operator=(const SdeDevice&) = delete;
 		SdeDevice(SdeDevice&&) = delete;
 		SdeDevice& operator=(SdeDevice&&) = delete;
+
+	public:
+		vk::Queue graphicsQueue() { return m_GraphicsQueue; }
+		vk::Queue presentQueue() { return m_PresentQueue; }
+		vk::Device device() { return m_Device.get(); }
+		vk::SurfaceKHR surface() { return m_Surface; }
+		vk::CommandPool commandPool() { return m_CommandPool; }
+		QueueFamilyIndices findPhysicalQueueFamilies() { return findQueueFamilies(m_PhysicalDevice); }
+		SwapChainSupportDetails getSwapChainSupport() { return querySwapChainSupport(m_PhysicalDevice); }
 
 	private:
 		void createInstance();

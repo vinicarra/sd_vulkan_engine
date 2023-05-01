@@ -2,6 +2,7 @@
 
 #include "sde_window.h"
 #include "sde_device.h"
+#include "sde_renderer.h"
 
 namespace sde {
 
@@ -21,6 +22,7 @@ namespace sde {
 	private:
 		SdeWindow m_SdeWindow{WIDTH, HEIGHT, "Application"};
 		SdeDevice m_SdeDevice{m_SdeWindow};
+		SdeRenderer m_SdeRenderer{ m_SdeWindow, m_SdeDevice };
 	};
 
 }

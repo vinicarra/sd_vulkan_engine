@@ -89,6 +89,7 @@ namespace sde {
 		vk::DebugUtilsMessengerCreateInfoEXT createInfo;
 		populateDebugMessengerCreateInfo(createInfo);
 
+		std::cout << "Validation layers enabled\n";
 
 		if (CreateDebugUtilsMessengerEXT(m_Instance.get(), reinterpret_cast<const VkDebugUtilsMessengerCreateInfoEXT*>(&createInfo), nullptr, &m_DebugMessenger) != VK_SUCCESS) {
 			throw std::runtime_error("Failed create debug callback");
