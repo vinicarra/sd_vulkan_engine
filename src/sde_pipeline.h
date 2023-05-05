@@ -34,6 +34,8 @@ namespace sde {
 		SdePipeline& operator=(const SdePipeline&) = delete;
 
 		void bind(vk::CommandBuffer commandBuffer);
+		static void defaultPipelineConfigInfo(PipelineConfigInfo& configInfo);
+		static void enableAlphaBlending(PipelineConfigInfo& configInfo);
 
 	private:
 		void createGraphicsPipeline(const std::string& vertexPath, const std::string& fragmentPath, const PipelineConfigInfo& configInfo);
