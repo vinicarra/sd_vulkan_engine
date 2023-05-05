@@ -72,7 +72,7 @@ namespace sde {
 		renderPassInfo.renderArea.setOffset({ static_cast<int32_t>(0), static_cast<int32_t>(0) });
 		renderPassInfo.renderArea.extent = m_SdeSwapChain->getSwapChainExtent();
 
-		vk::ClearValue clearColor = { std::array<float, 4>{ 0.0f, 1.0f, 0.0f, 1.0f } };
+		vk::ClearValue clearColor = { std::array<float, 4>{ 0.16f, 0.74f , 0.75f, 1.0f } };
 		renderPassInfo.clearValueCount = 1;
 		renderPassInfo.pClearValues = &clearColor;
 
