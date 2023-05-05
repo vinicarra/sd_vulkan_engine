@@ -41,6 +41,8 @@ namespace sde {
 		void createVertexBuffers(const std::vector<Vertex>& vertices);
 		void createIndexBuffers(const std::vector<uint32_t>& indices);
 
+		SdeDevice& m_Device;
+
 		uint32_t m_VertexCount = 0, m_IndexCount = 0;
 		bool hasIndexBuffer = false;
 

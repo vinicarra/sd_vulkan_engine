@@ -21,4 +21,28 @@ namespace sde {
 
         return attributes;
     }
+
+    SdeModel::SdeModel(SdeDevice& device, const Builder& builder) : m_Device(device)
+    {
+        createVertexBuffers(builder.vertices);
+        createIndexBuffers(builder.indices);
+    }
+
+    SdeModel::~SdeModel()
+    {
+    }
+
+    void SdeModel::createVertexBuffers(const std::vector<Vertex>& vertices)
+    {
+        m_VertexCount = static_cast<uint32_t>(vertices.size());
+
+        uint32_t vertexSize = sizeof(vertices[0]);
+        uint64_t bufferSize = static_cast<uint64_t>(vertexSize) * m_VertexCount;
+
+
+    }
+
+    void SdeModel::createIndexBuffers(const std::vector<uint32_t>& indices)
+    {
+    }
 }
