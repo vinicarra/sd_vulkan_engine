@@ -1,6 +1,8 @@
 #pragma once
 
+#include "vk_mem_alloc.hpp"
 #include "sde_window.h"
+
 #include <vector>
 #include <string>
 #include <set>
@@ -59,6 +61,7 @@ namespace sde {
 		void pickPhysicalDevice();
 		void createLogicalDevice();
 		void createCommandPool();
+		void createAllocator();
 
 		// Helper functions
 		std::vector<const char*> getRequiredExtensions();
@@ -76,6 +79,8 @@ namespace sde {
 		vk::SurfaceKHR m_Surface;
 		vk::Queue m_GraphicsQueue, m_PresentQueue;
 		vk::CommandPool m_CommandPool;
+
+		vma::Allocator m_Allocator;
 
 		VkDebugUtilsMessengerEXT m_DebugMessenger;
 

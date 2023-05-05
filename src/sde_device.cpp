@@ -48,10 +48,12 @@ namespace sde {
 		pickPhysicalDevice();
 		createLogicalDevice();
 		createCommandPool();
+		createAllocator();
 	}
 
 	sde::SdeDevice::~SdeDevice()
 	{
+		m_Allocator.destroy();
 		m_Device.get().destroyCommandPool(m_CommandPool);
 
 		if (enableValidationLayers) {
@@ -174,6 +176,22 @@ namespace sde {
 		poolInfo.queueFamilyIndex = queueIndices.graphicsFamily.value();
 
 		m_CommandPool = m_Device.get().createCommandPool(poolInfo);
+	}
+
+	void SdeDevice::createAllocator()
+	{
+		VmaVulkanFunctions vulkanFunctions = {};
+		vulkanFunctions.vkGetInstanceProcAddr = &vkGetInstanceProcAddr;
+		vulkanFunctions.vkGetDeviceProcAddr = &vkGetDeviceProcAddr;
+
+		VmaAllocatorCreateInfo allocatorCreateInfo = {};
+		allocatorCreateInfo.vulkanApiVersion = VK_API_VERSION_1_1;
+		allocatorCreateInfo.physicalDevice = m_PhysicalDevice;
+		allocatorCreateInfo.device = m_Device.get();
+		allocatorCreateInfo.instance = m_Instance.get();
+		allocatorCreateInfo.pVulkanFunctions = &vulkanFunctions;
+
+		m_Allocator = vma::createAllocator(allocatorCreateInfo);
 	}
 
 	std::vector<const char*> SdeDevice::getRequiredExtensions()

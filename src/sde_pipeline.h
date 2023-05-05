@@ -1,6 +1,8 @@
 #pragma once
 
 #include "sde_device.h"
+#include "sde_model.h"
+
 #include <vulkan/vulkan.hpp>
 #include <vector>
 #include <string>

@@ -136,8 +136,8 @@ namespace sde {
 		configInfo.colorBlendInfo.blendConstants[2] = 0.0f;  // Optional
 		configInfo.colorBlendInfo.blendConstants[3] = 0.0f;  // Optional
 
-		configInfo.bindingDescriptions = LveModel::Vertex::getBindingDescriptions();
-		configInfo.attributeDescriptions = LveModel::Vertex::getAttributeDescriptions();
+		configInfo.bindingDescriptions = SdeModel::Vertex::getBindingDescriptions();
+		configInfo.attributeDescriptions = SdeModel::Vertex::getAttributeDescriptions();
 	}
 
 	void SdePipeline::enableAlphaBlending(PipelineConfigInfo& configInfo)
