@@ -64,7 +64,7 @@ namespace sde {
 		m_CurrentFrameIndex = (m_CurrentFrameIndex + 1) % SdeSwapChain::MAX_FRAMES_IN_FLIGHT;
 	}
 
-	void SdeRenderer::beginSwapChainRenderPass(vk::CommandBuffer buffer)
+	void SdeRenderer::beginSwapChainRenderPass(vk::CommandBuffer commandBuffer)
 	{
 		vk::RenderPassBeginInfo renderPassInfo = {};
 		renderPassInfo.renderPass = m_SdeSwapChain->getRenderPass();
@@ -76,7 +76,20 @@ namespace sde {
 		renderPassInfo.clearValueCount = 1;
 		renderPassInfo.pClearValues = &clearColor;
 
-		buffer.beginRenderPass(renderPassInfo, vk::SubpassContents::eInline);
+		commandBuffer.beginRenderPass(renderPassInfo, vk::SubpassContents::eInline);
+
+		vk::Viewport viewport = {};
+		viewport.x = 0.0f;
+		viewport.y = 0.0f;
+		viewport.width = static_cast<float>(m_SdeSwapChain->getSwapChainExtent().width);
+		viewport.height = static_cast<float>(m_SdeSwapChain->getSwapChainExtent().height);
+		viewport.minDepth = 0.0f;
+		viewport.maxDepth = 1.0f;
+
+		vk::Rect2D scissor{ {0, 0}, m_SdeSwapChain->getSwapChainExtent() };
+
+		commandBuffer.setViewport(0, viewport);
+		commandBuffer.setScissor(0, scissor);
 	}
 
 	void SdeRenderer::endSwapChainRenderPass(vk::CommandBuffer buffer)

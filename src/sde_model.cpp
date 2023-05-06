@@ -32,17 +32,46 @@ namespace sde {
     {
     }
 
+    void SdeModel::bind(vk::CommandBuffer commandBuffer)
+    {
+        vk::Buffer buffers[] = { m_VertexBuffer->getBuffer() };
+        vk::DeviceSize offsets[] = { 0 };
+
+        commandBuffer.bindVertexBuffers(0, 1, buffers, offsets);
+    }
+
+    void SdeModel::draw(vk::CommandBuffer commandBuffer)
+    {
+        commandBuffer.draw(m_VertexCount, 1, 0, 0);
+    }
+
     void SdeModel::createVertexBuffers(const std::vector<Vertex>& vertices)
     {
         m_VertexCount = static_cast<uint32_t>(vertices.size());
 
+        std::cout << "Allocating " << m_VertexCount << " vertices\n";
+
         uint32_t vertexSize = sizeof(vertices[0]);
         uint64_t bufferSize = static_cast<uint64_t>(vertexSize) * m_VertexCount;
 
+        SdeBuffer stagingBuffer(m_Device, bufferSize,
+            vk::BufferUsageFlagBits::eTransferSrc, 
+            vma::AllocationCreateFlagBits::eHostAccessSequentialWrite | vma::AllocationCreateFlagBits::eMapped);
 
+        stagingBuffer.map(); // This is not needed
+        stagingBuffer.writeTo((void*)vertices.data(), bufferSize);
+
+        m_VertexBuffer = std::make_unique<SdeBuffer>(m_Device, bufferSize,
+            vk::BufferUsageFlagBits::eVertexBuffer | vk::BufferUsageFlagBits::eTransferDst);
+
+        m_Device.copyBuffer(stagingBuffer.getBuffer(), m_VertexBuffer->getBuffer(), bufferSize);
     }
 
     void SdeModel::createIndexBuffers(const std::vector<uint32_t>& indices)
+    {
+    }
+
+    void SdeModel::Builder::loadModel(const std::string& filePath)
     {
     }
 }

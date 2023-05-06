@@ -51,6 +51,12 @@ namespace sde {
 		vk::Device device() { return m_Device.get(); }
 		vk::SurfaceKHR surface() { return m_Surface; }
 		vk::CommandPool commandPool() { return m_CommandPool; }
+		vma::Allocator getAllocator() { return m_Allocator; }
+
+		vk::CommandBuffer beginSingleTimeCommand();
+		void endSingleTimeCommand(vk::CommandBuffer commandBuffer);
+		void copyBuffer(vk::Buffer src, vk::Buffer dst, uint64_t size);
+
 		QueueFamilyIndices findPhysicalQueueFamilies() { return findQueueFamilies(m_PhysicalDevice); }
 		SwapChainSupportDetails getSwapChainSupport() { return querySwapChainSupport(m_PhysicalDevice); }
 

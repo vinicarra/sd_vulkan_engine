@@ -66,7 +66,7 @@ namespace sde {
 		pipelineInfo.pMultisampleState = &configInfo.multisampleInfo;
 		pipelineInfo.pDepthStencilState = nullptr; // Optional
 		pipelineInfo.pColorBlendState = &configInfo.colorBlendInfo;
-		pipelineInfo.pDynamicState = nullptr;
+		pipelineInfo.pDynamicState = &configInfo.dynamicStateInfo;
 
 		pipelineInfo.layout = configInfo.pipelineLayout;
 		pipelineInfo.renderPass = configInfo.renderPass;
@@ -135,6 +135,11 @@ namespace sde {
 		configInfo.colorBlendInfo.blendConstants[1] = 0.0f;  // Optional
 		configInfo.colorBlendInfo.blendConstants[2] = 0.0f;  // Optional
 		configInfo.colorBlendInfo.blendConstants[3] = 0.0f;  // Optional
+
+		configInfo.dynamicStateEnables = { vk::DynamicState::eViewport, vk::DynamicState::eScissor };
+		configInfo.dynamicStateInfo.pDynamicStates = configInfo.dynamicStateEnables.data();
+		configInfo.dynamicStateInfo.dynamicStateCount =
+			static_cast<uint32_t>(configInfo.dynamicStateEnables.size());
 
 		configInfo.bindingDescriptions = SdeModel::Vertex::getBindingDescriptions();
 		configInfo.attributeDescriptions = SdeModel::Vertex::getAttributeDescriptions();

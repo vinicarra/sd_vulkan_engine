@@ -21,6 +21,8 @@ namespace sde {
 		void beginSwapChainRenderPass(vk::CommandBuffer buffer);
 		void endSwapChainRenderPass(vk::CommandBuffer buffer);
 
+		vk::RenderPass getSwapChainRenderPass() { return m_SdeSwapChain->getRenderPass(); }
+
 		vk::CommandBuffer getCurrentCommandBuffer() const {
 			return m_CommandBuffers[m_CurrentFrameIndex];
 		}

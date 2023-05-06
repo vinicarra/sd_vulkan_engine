@@ -3,6 +3,8 @@
 #include "sde_window.h"
 #include "sde_device.h"
 #include "sde_renderer.h"
+#include "sde_model.h"
+#include "sde_pipeline.h"
 
 namespace sde {
 
@@ -23,6 +25,11 @@ namespace sde {
 		SdeWindow m_SdeWindow{WIDTH, HEIGHT, "Application"};
 		SdeDevice m_SdeDevice{m_SdeWindow};
 		SdeRenderer m_SdeRenderer{ m_SdeWindow, m_SdeDevice };
+
+		vk::PipelineLayout m_PipelineLayout;
+
+		std::shared_ptr<SdePipeline> m_DefaultPipeline;
+		std::unique_ptr<SdeModel> m_TriangleModel;
 	};
 
 }

@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 
 #include "sde_device.h"
+#include "sde_buffer.h"
 
 #include <vulkan/vulkan.hpp>
 #include <vector>
@@ -19,7 +20,9 @@ namespace sde {
 
 			static std::vector<vk::VertexInputBindingDescription> getBindingDescriptions();
 			static std::vector<vk::VertexInputAttributeDescription> getAttributeDescriptions();
-;		};
+		};
+
+		static std::vector<Vertex> TriangleVertices;
 
 		struct Builder {
 			std::vector<Vertex> vertices = {};
@@ -46,7 +49,7 @@ namespace sde {
 		uint32_t m_VertexCount = 0, m_IndexCount = 0;
 		bool hasIndexBuffer = false;
 
-		vk::UniqueBuffer m_VertexBuffer, m_IndexBuffer;
+		std::unique_ptr<SdeBuffer> m_VertexBuffer, m_IndexBuffer;
 	};
 
 }

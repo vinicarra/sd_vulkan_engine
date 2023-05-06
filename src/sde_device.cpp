@@ -63,6 +63,45 @@ namespace sde {
 		m_Instance.get().destroySurfaceKHR(m_Surface);
 	}
 
+	vk::CommandBuffer SdeDevice::beginSingleTimeCommand()
+	{
+		vk::CommandBufferAllocateInfo allocateInfo = {};
+		allocateInfo.level = vk::CommandBufferLevel::ePrimary;
+		allocateInfo.commandPool = m_CommandPool;
+		allocateInfo.commandBufferCount = 1;
+
+		vk::CommandBuffer commandBuffer = m_Device->allocateCommandBuffers(allocateInfo)[0];
+		
+		commandBuffer.begin(vk::CommandBufferBeginInfo(vk::CommandBufferUsageFlagBits::eOneTimeSubmit));
+		return commandBuffer;
+	}
+
+	void SdeDevice::endSingleTimeCommand(vk::CommandBuffer commandBuffer)
+	{
+		commandBuffer.end();
+
+		// Submit
+		vk::SubmitInfo submitInfo = {};
+		submitInfo.commandBufferCount = 1;
+		submitInfo.pCommandBuffers = &commandBuffer;
+
+		m_GraphicsQueue.submit(submitInfo);
+		m_GraphicsQueue.waitIdle();
+
+		m_Device->freeCommandBuffers(m_CommandPool, commandBuffer);;
+	}
+
+	void SdeDevice::copyBuffer(vk::Buffer src, vk::Buffer dst, uint64_t size)
+	{
+		auto commandBuffer = beginSingleTimeCommand();
+
+		vk::BufferCopy copyRegion = {};
+		copyRegion.size = size;
+
+		commandBuffer.copyBuffer(src, dst, 1, &copyRegion);
+		endSingleTimeCommand(commandBuffer);
+	}
+
 	void sde::SdeDevice::createInstance()
 	{
 		vk::ApplicationInfo appInfo(m_SdeWindow.getName().c_str(), 1, "No Engine", 1, VK_API_VERSION_1_1);

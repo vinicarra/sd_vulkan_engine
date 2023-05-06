@@ -22,6 +22,8 @@ namespace sde {
 		vk::PipelineMultisampleStateCreateInfo multisampleInfo;
 		vk::PipelineColorBlendAttachmentState colorBlendAttachment;
 		vk::PipelineColorBlendStateCreateInfo colorBlendInfo;
+		std::vector<vk::DynamicState> dynamicStateEnables;
+		vk::PipelineDynamicStateCreateInfo dynamicStateInfo;
 		vk::PipelineLayout pipelineLayout = nullptr;
 		vk::RenderPass renderPass = nullptr;
 		uint32_t subpass = 0;
