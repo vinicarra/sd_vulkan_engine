@@ -38,18 +38,25 @@ namespace sde {
         vk::DeviceSize offsets[] = { 0 };
 
         commandBuffer.bindVertexBuffers(0, 1, buffers, offsets);
+
+        if (m_HasIndexBuffer) {
+            commandBuffer.bindIndexBuffer(m_IndexBuffer->getBuffer(), 0, vk::IndexType::eUint32);
+        }
     }
 
     void SdeModel::draw(vk::CommandBuffer commandBuffer)
     {
-        commandBuffer.draw(m_VertexCount, 1, 0, 0);
+        if (m_HasIndexBuffer) {
+            commandBuffer.drawIndexed(m_IndexCount, 1, 0, 0, 0);
+        }
+        else {
+            commandBuffer.draw(m_VertexCount, 1, 0, 0);
+        }
     }
 
     void SdeModel::createVertexBuffers(const std::vector<Vertex>& vertices)
     {
         m_VertexCount = static_cast<uint32_t>(vertices.size());
-
-        std::cout << "Allocating " << m_VertexCount << " vertices\n";
 
         uint32_t vertexSize = sizeof(vertices[0]);
         uint64_t bufferSize = static_cast<uint64_t>(vertexSize) * m_VertexCount;
@@ -69,6 +76,25 @@ namespace sde {
 
     void SdeModel::createIndexBuffers(const std::vector<uint32_t>& indices)
     {
+        m_HasIndexBuffer = indices.size() > 0;
+        m_IndexCount = indices.size();
+
+        if (!m_HasIndexBuffer) return;
+
+        uint32_t indexSize = sizeof(indices[0]);
+        uint64_t bufferSize = static_cast<uint64_t>(indexSize) * m_IndexCount;
+
+        SdeBuffer stagingBuffer(m_Device, bufferSize,
+            vk::BufferUsageFlagBits::eTransferSrc,
+            vma::AllocationCreateFlagBits::eHostAccessSequentialWrite | vma::AllocationCreateFlagBits::eMapped);
+
+        stagingBuffer.map(); // This is not needed
+        stagingBuffer.writeTo((void*)indices.data(), bufferSize);
+
+        m_IndexBuffer = std::make_unique<SdeBuffer>(m_Device, bufferSize,
+            vk::BufferUsageFlagBits::eIndexBuffer | vk::BufferUsageFlagBits::eTransferDst);
+
+        m_Device.copyBuffer(stagingBuffer.getBuffer(), m_IndexBuffer->getBuffer(), bufferSize);
     }
 
     void SdeModel::Builder::loadModel(const std::string& filePath)

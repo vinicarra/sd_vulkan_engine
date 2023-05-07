@@ -47,7 +47,7 @@ namespace sde {
 		SdeDevice& m_Device;
 
 		uint32_t m_VertexCount = 0, m_IndexCount = 0;
-		bool hasIndexBuffer = false;
+		bool m_HasIndexBuffer = false;
 
 		std::unique_ptr<SdeBuffer> m_VertexBuffer, m_IndexBuffer;
 	};

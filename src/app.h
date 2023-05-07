@@ -29,7 +29,7 @@ namespace sde {
 		vk::PipelineLayout m_PipelineLayout;
 
 		std::shared_ptr<SdePipeline> m_DefaultPipeline;
-		std::unique_ptr<SdeModel> m_TriangleModel;
+		std::unique_ptr<SdeModel> m_TriangleModel, m_RectangleModel;
 	};
 
 }
