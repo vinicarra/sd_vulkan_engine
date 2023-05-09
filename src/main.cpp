@@ -3,6 +3,10 @@
 #define VMA_DYNAMIC_VULKAN_FUNCTION 1
 #include "vk_mem_alloc.hpp"
 
+#define GLM_FORCE_RADIANS
+#define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include "glm/glm.hpp"
+
 #include <iostream>
 #include <vulkan/vulkan.hpp>
 #include "app.h"

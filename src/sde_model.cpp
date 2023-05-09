@@ -66,7 +66,7 @@ namespace sde {
             vma::AllocationCreateFlagBits::eHostAccessSequentialWrite | vma::AllocationCreateFlagBits::eMapped);
 
         stagingBuffer.map(); // This is not needed
-        stagingBuffer.writeTo((void*)vertices.data(), bufferSize);
+        stagingBuffer.writeTo((void*)vertices.data());
 
         m_VertexBuffer = std::make_unique<SdeBuffer>(m_Device, bufferSize,
             vk::BufferUsageFlagBits::eVertexBuffer | vk::BufferUsageFlagBits::eTransferDst);
@@ -89,7 +89,7 @@ namespace sde {
             vma::AllocationCreateFlagBits::eHostAccessSequentialWrite | vma::AllocationCreateFlagBits::eMapped);
 
         stagingBuffer.map(); // This is not needed
-        stagingBuffer.writeTo((void*)indices.data(), bufferSize);
+        stagingBuffer.writeTo((void*)indices.data());
 
         m_IndexBuffer = std::make_unique<SdeBuffer>(m_Device, bufferSize,
             vk::BufferUsageFlagBits::eIndexBuffer | vk::BufferUsageFlagBits::eTransferDst);

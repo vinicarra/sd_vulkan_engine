@@ -21,10 +21,18 @@ namespace sde {
 		void beginSwapChainRenderPass(vk::CommandBuffer buffer);
 		void endSwapChainRenderPass(vk::CommandBuffer buffer);
 
+		int getFrameIndex() const {
+			return m_CurrentFrameIndex;
+		}
+
 		vk::RenderPass getSwapChainRenderPass() { return m_SdeSwapChain->getRenderPass(); }
 
 		vk::CommandBuffer getCurrentCommandBuffer() const {
 			return m_CommandBuffers[m_CurrentFrameIndex];
+		}
+
+		float getAspectRatio() const {
+			return m_SdeSwapChain->getAspectRatio();
 		}
 
 	private:

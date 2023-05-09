@@ -23,10 +23,11 @@ namespace sde {
 	public:
 		vk::Buffer getBuffer() { return m_Buffer; }
 		vma::Allocation getAllocation() { return m_Allocation; }
+		vma::AllocationInfo getAllocationInfo() { return m_AllocationInfo; }
 
 		vk::Result map();
 		void unmap();
-		void writeTo(void* data, uint64_t dataSize);
+		void writeTo(void* data);
 
 	private:
 		SdeDevice& m_Device;
@@ -34,6 +35,7 @@ namespace sde {
 		vk::Buffer m_Buffer;
 		vma::AllocationInfo m_AllocationInfo;
 
+		uint64_t m_Size;
 		void* m_MappedData = nullptr;
 		
 		vk::Flags<vma::AllocationCreateFlagBits> m_AllocationFlags;

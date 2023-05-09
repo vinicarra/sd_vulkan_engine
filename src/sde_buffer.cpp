@@ -6,7 +6,7 @@ namespace sde {
 		uint64_t size, 
 		vk::Flags<vk::BufferUsageFlagBits> usageFlags,
 		vk::Flags<vma::AllocationCreateFlagBits> allocationFlags,
-		vma::MemoryUsage memoryUsageFlags) : m_Device(device), m_AllocationFlags(allocationFlags)
+		vma::MemoryUsage memoryUsageFlags) : m_Device(device), m_AllocationFlags(allocationFlags), m_Size(size)
 	{
 		// Allocate new memory
 		vk::BufferCreateInfo bufferInfo(vk::BufferCreateFlags(), size, usageFlags);
@@ -36,10 +36,10 @@ namespace sde {
 		m_Device.getAllocator().unmapMemory(m_Allocation);
 	}
 
-	void SdeBuffer::writeTo(void* data, uint64_t dataSize)
+	void SdeBuffer::writeTo(void* data)
 	{
 		if (m_AllocationFlags & vma::AllocationCreateFlagBits::eMapped) {
-			memcpy(m_AllocationInfo.pMappedData, data, dataSize);
+			memcpy(m_AllocationInfo.pMappedData, data, m_Size);
 		}
 		else {
 			memcpy(m_MappedData, data, sizeof(data));
